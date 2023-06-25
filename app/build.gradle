@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -15,6 +17,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "COIN_CAP_BASE_URL", '"https://api.coincap.io/v2/"'
+        buildConfigField "String", "COIN_CAP_KEY", '"6d95ab19-f174-4457-a246-2068438fe957"'
     }
 
     buildTypes {
@@ -24,11 +29,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding true
+        buildConfig true
     }
 }
 
@@ -44,11 +53,25 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.10.1'
 
-    implementation 'androidx.activity:activity-ktx:1.7.2'
+    // DI
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
 
-    implementation ('io.socket:socket.io-client:2.1.0') {
-        exclude group: 'org.json', module: 'json'
-    }
+    implementation "com.github.bumptech.glide:glide:4.15.1"
+
+    implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation "androidx.fragment:fragment-ktx:1.6.0"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    debugImplementation "com.github.chuckerteam.chucker:library:$chucker"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
