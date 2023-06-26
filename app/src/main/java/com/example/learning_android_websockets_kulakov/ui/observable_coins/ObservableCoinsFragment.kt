@@ -61,7 +61,7 @@ class ObservableCoinsFragment : Fragment(), View.OnClickListener, ObservableCoin
     }
 
     override fun onItemRemove(coin: Coin) {
-
+        viewModel.removeCoin(coin)
     }
 
 }

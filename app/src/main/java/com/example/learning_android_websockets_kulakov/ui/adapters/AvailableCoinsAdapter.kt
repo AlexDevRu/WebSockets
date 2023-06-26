@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.learning_android_websockets_kulakov.R
 import com.example.learning_android_websockets_kulakov.databinding.ItemCoinBinding
 import com.example.learning_android_websockets_kulakov.models.Coin
 
@@ -55,7 +56,7 @@ class AvailableCoinsAdapter(
             Glide.with(binding.ivCurrency)
                 .load(coin.getImageUrl())
                 .into(binding.ivCurrency)
-            binding.tvPrice.text = "${coin.priceUsd}$"
+            binding.tvPrice.text = binding.root.context.getString(R.string.price, coin.priceUsd.toFloat())
         }
 
         override fun onClick(view: View?) {
